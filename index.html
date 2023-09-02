@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-  <style>
-    html, body {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    
-    #map {
-      width: 100%;
-      height: 100%;
-    }
-    
-    #locations {
-      width: 200px;
-      height: 100%;
-      overflow-y: auto;
-      position: absolute;
-      z-index: 1000;
-      background: white;
-      padding: 10px;
-    }
-  </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #locations {
+            width: 200px;
+            height: 100%;
+            overflow-y: auto;
+            position: absolute;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div id="locations"></div>
-  <div id="map"></div>
+    <div id="locations">
+        <ul id="location-list">
+            <!-- You can add list items here, or dynamically populate this list using JavaScript -->
+            <!-- Example: -->
+            <!-- <li data-coordinates='[50, 30]'>Location 1</li> -->
+            <!-- <li data-coordinates='[40, 20]'>Location 2</li> -->
+        </ul>
+    </div>
+    <div id="map"></div>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="map.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="map.js"></script>
 </body>
 </html>
+
 

@@ -1,39 +1,38 @@
-let map, markers = [];
-
-const aspectRatio = 1; // This sets the aspect ratio to 1
+let map;
+let markers = [];
 
 const myIcon = L.icon({
     iconUrl: 'circle_blue_black.png',
-    iconSize: [60, 60] // You can set the size as per your need
+    iconSize: [60, 60]
 });
 
 function initMap() {
+    console.log("initMap is running");
     map = L.map('map');
     const bounds = calculateBounds();
     const imageLayer = L.imageOverlay('level_2.png', bounds).addTo(map);
-    map.fitBounds(imageLayer.getBounds()); // Ensure map fits to the bounds of the image
+    map.fitBounds(imageLayer.getBounds());
 
-    // Add Leaflet-specific event listeners
     addEventListeners();
-
-    // Add click events to the location list items (assuming they exist in your HTML)
-    const locationItems = document.querySelectorAll('#location-list li');
-    locationItems.forEach(item => {
-        item.addEventListener('click', function () {
-            const coords = JSON.parse(this.getAttribute('data-coordinates'));
-            addMarkerToMap(coords);
-        });
-    });
+    populateLocationList();
 }
 
-// Function to add custom marker to the map at given coordinates
 function addMarkerToMap(coords) {
-    L.marker(coords, { icon: myIcon }).addTo(map);
+    // Clear all markers first
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
+
+    console.log("Adding marker to map at coordinates:", coords);
+    const marker = L.marker(coords, { icon: myIcon }).addTo(map);
+    console.log("Marker:", marker);
+    markers.push(marker);
+    console.log("Attempting to fly to marker...");
+    map.flyTo(marker.getLatLng(), map.getZoom());
 }
 
 function resizeMap() {
-    map.invalidateSize(); // This forces Leaflet to adjust to the new size
-    map.fitBounds(calculateBounds()); // Fit map to the bounds
+    map.invalidateSize();
+    map.fitBounds(calculateBounds());
 }
 
 function addEventListeners() {
@@ -49,6 +48,9 @@ function calculateBounds() {
     const mapHeight = 564;
     return [[-mapHeight / 2, -mapWidth / 2], [mapHeight / 2, mapWidth / 2]];
 }
+
+
+
 
 let locations = [
     { name: 'Clinic 1 (Orthopaedic)', coordinates: [-42.55308, -179.296875] },
@@ -139,43 +141,29 @@ let locations = [
 
 ];
 
+function populateLocationList() {
+    const locationList = document.getElementById('location-list');
 
-function addLocations() {
-    let locationsDiv = document.getElementById('locations');
+    // Clear any existing items first
+    locationList.innerHTML = '';
 
-    locations.forEach((location, index) => {
-        let locationDiv = document.createElement('div');
-        locationDiv.innerHTML = location.name;
-        locationDiv.onclick = function () { highlightMarker(index); };
-        locationsDiv.appendChild(locationDiv);
-    });
-}
-
-function createMarkers() {
     locations.forEach(location => {
-        let marker = L.marker(location.coordinates, { icon: myIcon });
-        markers.push(marker);
-    });
-}
+        const listItem = document.createElement('li');
+        listItem.textContent = location.name;
+        listItem.setAttribute('data-coordinates', JSON.stringify(location.coordinates));
 
-function highlightMarker(index) {
-    for (let i = 0; i < markers.length; i++) {
-        if (i === index) {
-            if (!map.hasLayer(markers[i])) {
-                markers[i].addTo(map);
-            }
-        } else {
-            if (map.hasLayer(markers[i])) {
-                map.removeLayer(markers[i]);
-            }
-        }
-    }
+        // Add click event to the list item
+        listItem.addEventListener('click', function () {
+            const coords = JSON.parse(this.getAttribute('data-coordinates'));
+            addMarkerToMap(coords);
+        });
+
+        locationList.appendChild(listItem);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     initMap();
-    addLocations();
-    createMarkers();
     window.addEventListener('resize', resizeMap);
     resizeMap(); // Call immediately to ensure correct size on load
 });

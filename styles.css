@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+
+#locations {
+  width: 200px;
+  height: 100%;
+  overflow-y: auto; /* This will add a scroll bar if the locations list is longer than the page */
+  position: absolute; /* This will make the locations div stay in place even when you scroll the map */
+  z-index: 1000; /* This will keep the locations div above the map */
+  background: white; /* This is to ensure the locations list is readable over the map */
+  padding: 10px; /* This gives a little space around the location names */
+}
+

@@ -8,7 +8,10 @@ const myIcon = L.icon({
 
 function initMap() {
     console.log("initMap is running");
-    map = L.map('map');
+    map = L.map('map', {
+        fullscreenControl: true,
+    });
+    
     const bounds = calculateBounds();
     const imageLayer = L.imageOverlay('level_2.png', bounds).addTo(map);
     map.fitBounds(imageLayer.getBounds());
@@ -53,6 +56,14 @@ function calculateBounds() {
 
 
 let locations = [
+
+    { name: 'ACCI', coordinates: [-54.162434, 243.984375] },
+    { name: 'ATC X-Ray - lvl3', coordinates: [-49.837982, 366.328125] },
+    { name: 'Blood Tests', coordinates: [-38.082974, -309.375] },
+    { name: 'Breast Unit', coordinates: [-19.973349, 216.5625] },
+    { name: 'Cardiology Diagnostic Tests', coordinates: [-42.60308, -136.40625] },
+    { name: 'Careers', coordinates: [-58.077876, -19.6875] },
+    { name: 'Cleft Lip and Palatte - lvl3', coordinates: [-18.646245, -291.09375] },
     { name: 'Clinic 1 (Orthopaedic)', coordinates: [-42.55308, -179.296875] },
     { name: 'Clinic 1a - lvl3 (Immunology)', coordinates: [33.137551, -120.234375] },
     { name: 'Clinic 2 (Rheumatology/ECG)', coordinates: [25.165173, -180.703125] },
@@ -78,14 +89,6 @@ let locations = [
     { name: 'Clinic 34', coordinates: [-23.935838, 381.09375] },
     { name: 'Clinic 42', coordinates: [-63.283627, 140.625] },
     { name: 'Clinic 43', coordinates: [-83.726943, 79.453125] },
-
-    { name: 'ACCI', coordinates: [-54.162434, 243.984375] },
-    { name: 'ATC X-Ray - lvl3', coordinates: [-49.837982, 366.328125] },
-    { name: 'Blood Tests', coordinates: [-38.082974, -309.375] },
-    { name: 'Breast Unit', coordinates: [-19.973349, 216.5625] },
-    { name: 'Cardiology Diagnostic Tests', coordinates: [-42.60308, -136.40625] },
-    { name: 'Careers', coordinates: [-58.077876, -19.6875] },
-    { name: 'Cleft Lip and Palatte - lvl3', coordinates: [-18.646245, -291.09375] },
     { name: 'Clinical Neurophysiology - lvl3', coordinates: [-27.683528, -66.796875] },
     { name: 'Child Development Centre', coordinates: [-4.915833, 291.796875] },
     { name: 'CT and MRI imaging', coordinates: [11.817351, -123.046875] },
